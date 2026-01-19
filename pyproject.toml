@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "gt-of-pollution"
+version = "0.1.0"
+description = ""
+authors = ["Nathasya Christien <nathasya.abenita@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+numpy = "^2.4.1"
+matplotlib = "^3.10.8"
+scipy = "^1.17.0"
+pandas = "^2.3.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
