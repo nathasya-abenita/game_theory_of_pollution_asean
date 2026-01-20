@@ -11,6 +11,9 @@ numpy = "^2.4.1"
 matplotlib = "^3.10.8"
 scipy = "^1.17.0"
 pandas = "^2.3.3"
+rioxarray = "^0.20.0"
+array-to-latex = "^0.92"
+geopandas = "^1.1.2"
 
 
 [build-system]
