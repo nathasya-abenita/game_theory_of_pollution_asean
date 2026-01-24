@@ -16,7 +16,7 @@ if __name__ == '__main__':
     gdf_filtered = gdf[idxs].copy()
 
     # Save as a new shapefile
-    gdf_filtered.to_file('./data/vector/countries.zip')
+    gdf_filtered.to_file('./data/vector/countries.shp')
 
     # Plot map
     fig, ax = plt.subplots()
