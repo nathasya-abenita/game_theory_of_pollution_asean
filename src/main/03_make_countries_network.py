@@ -145,7 +145,7 @@ if __name__ == '__main__':
     gdf_countries = create_gdf_countries(filename="./data/vector/countries.shp", country_codes=country_codes)
     gdf_countries.plot(cmap='tab10', column='NAME', legend=True)
     plt.title('preview of countries')
-    plt.show()
+    plt.savefig('./output/figs/preview_countries.png')
 
     """ 1.2. Read population count raster data """
 
@@ -157,12 +157,12 @@ if __name__ == '__main__':
     y = raster_pop.y.values
     X, Y = np.meshgrid(x, y)
 
-    # Plotting
-    raster_pop.plot(robust=True)
-    plt.xlim(-0.2e7, 0.55e7)
-    plt.ylim(-0.2e7, 0.32e7)
-    plt.title("Gridded population count")
-    plt.show()
+    # # Plotting
+    # raster_pop.plot(robust=True)
+    # plt.xlim(-0.2e7, 0.55e7)
+    # plt.ylim(-0.2e7, 0.32e7)
+    # plt.title("Gridded population count")
+    # plt.savefig('./output/figs/population_preview.png')
 
     """ 2. Create graph vertices """
 
@@ -178,7 +178,7 @@ if __name__ == '__main__':
     plt.title("Centroids of ASEAN Countries")
     plt.axis("off")
     plt.legend(fontsize = 8)
-    plt.show()
+    plt.savefig('./output/figs/centroids.png')
 
     """ 3.1. Read resampled population count raster data """
 
@@ -240,10 +240,10 @@ if __name__ == '__main__':
         ax.axis("off")
         ax.set_title(time_int_strings[time_int_id], fontsize=10)
     plt.tight_layout()
-    plt.show()
+    plt.savefig('./output/figs/network.png')
 
     """ 3.4. Save wind vectors values """
-    np.save("./output/wind_vector_per_month_list.npy", wind_vector_per_month_list)
+    np.save("./output/vars/wind_vector_per_month_list.npy", wind_vector_per_month_list)
 
     """ 4.1. Compute psi_{ij} or graph's weight """
 
@@ -266,11 +266,11 @@ if __name__ == '__main__':
         psi_list.append(psi)
     
     """ 4.2. Save psi list  """
-    np.save("./output/psi_list.npy", psi_list)
+    np.save("./output/vars/psi_list.npy", psi_list)
 
     """ 4.3. Print psi list in LaTeX """
 
-    with open("./output/psi_list.txt", "w") as f:
+    with open("./output/vars/psi_list.txt", "w") as f:
         for i in range(12):
             f.write(f"month {i+1}\n")
             latex_str = a2l.to_ltx(
