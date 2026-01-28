@@ -1,5 +1,8 @@
-# --- Python ---
+# Python
 __pycache__/
 
-# --- Poetry virtual environments ---
+# Poetry virtual environments
 .venv/
+
+# Output folder
+/output
