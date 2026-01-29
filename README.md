@@ -5,7 +5,7 @@ Based on my undergraduate thesis titled "Modelling Transboundary Air Pollution i
 * To install the Poetry environment, run `poetry install` in the root directory.
 
 ## 📝 To Do 
-- [ ] Add wind speed data analysis
+- [x] Add wind speed data analysis
 - [ ] Refine color palette for network plots
 - [ ] Create module for differential game simulations
 - [ ] Simulate noncooperative game and finalize output

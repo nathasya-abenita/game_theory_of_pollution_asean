@@ -6,3 +6,6 @@ __pycache__/
 
 # Output folder
 /output
+
+# PDFs
+*.pdf
