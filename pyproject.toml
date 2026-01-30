@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Nathasya Christien <nathasya.abenita@gmail.com>"]
 readme = "README.md"
+packages = [ { include = "modules", from = "src" }, ] 
 
 [tool.poetry.dependencies]
 python = "^3.12"
