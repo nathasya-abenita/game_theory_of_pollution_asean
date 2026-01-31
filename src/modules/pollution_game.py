@@ -59,8 +59,8 @@ class PollutionGame:
         else:
             print("Numerical solution DOESN'T fulfills the definition of best response for each player with error of 1e-6")
             return False
-
-    def solve_static_game_numerical (self):
+    
+    def solve_static_game_noncooperative (self):
         # 1. Choose initial point of Nash equilibrium
         u_list = np.array([0.5 for _ in range (self.n)])
         
@@ -74,8 +74,7 @@ class PollutionGame:
 
             # Iterating best response for each player
             for i in range (self.n):
-                opt = minimize_scalar(self.cost_func(i, u_list_old), bounds=(0, 1), method='bounded')
-                u_list[i] = opt.x # updating best respons for player i
+                u_list[i] = self.solve_best_response(i, u_list_old) # updating best respons for player i
 
             # Convergence checking
             err = 0

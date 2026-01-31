@@ -29,9 +29,9 @@ if __name__ == '__main__':
     plt.grid() ; plt.legend(fontsize=12)
     plt.savefig('./output/figs/brf_two_players.png')
 
-    # Solve numerically
-    u_numerical = game.solve_static_game_numerical()
-    print('Numerical solution:', u_numerical)
+    # Solve analytically
+    u_analytical = game.solve_static_game_noncooperative()
+    print('Numerical solution:', u_analytical)
 
     # Validate numerical solution
-    game.validate_nash_equilibrium(u_numerical)
+    game.validate_nash_equilibrium(u_analytical)
