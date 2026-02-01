@@ -13,7 +13,6 @@ if __name__ == "__main__" :
             [1,2,5,6], [1,2],
             [1,2], [1,2],
             [1,2,8,9], [1,2,7,8,9]]
-    x_list_final, u_list_final = [[] for _ in range (n)], [[] for _ in range (n)]
 
     # Define labels for players
     labels = ["Indonesia", "Vietnam", "Thailand", "Malaysia", "The Philippines",
