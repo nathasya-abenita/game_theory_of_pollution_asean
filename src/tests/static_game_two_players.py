@@ -6,7 +6,7 @@ if __name__ == '__main__':
     # Defining game parameters
     n = 2               # number of players
     beta, lambd = 1, 1
-    psi = [[0.1 for _ in range (n)] for _ in range (n)]
+    psi = [[[0.1 for _ in range (n)] for _ in range (n)] for _ in range (12)]
     neigh = [[i for i in range (n)] for _ in range (n)]
     initial_x_list = [1, 1]     # initial pollution stock
 

@@ -43,11 +43,11 @@ mpl.rcParams.update({
 
 class PollutionGame:
 
-    def __init__ (self, n, beta, psi, neigh, lambd, initial_x_list, mu = None):
+    def __init__ (self, n, beta, psi_list, neigh, lambd, initial_x_list, mu = None):
         # Save parameters
         self.n = n # number of players
         self.beta = beta
-        self.psi = psi
+        self.psi_list = psi_list
         self.neigh = neigh
         self.lambd = lambd
         self.initial_x_list = initial_x_list
@@ -55,6 +55,9 @@ class PollutionGame:
         # Special parameter for cooperative game (diplomatic influence)
         if type(mu) != type(None):
             self.mu = mu
+
+        # Use first month of psi as initialization
+        self.psi = psi_list[0]
     
     def check_x_list (self, x_list):
         if type(x_list) == type(None):

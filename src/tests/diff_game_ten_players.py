@@ -7,7 +7,7 @@ if __name__ == "__main__" :
     n = 10 # number of players
     T, step_size = 12*3, 0.01
     beta, lambd = 10, 4
-    psi = [[0.1 for _ in range (n)] for _ in range (n)]
+    psi = [[[0.1 for _ in range (n)] for _ in range (n)] for _ in range (12)]
     neigh = [[1,2,3,4], [1,2,3],
             [1,2], [1,2],
             [1,2,5,6], [1,2],
