@@ -84,16 +84,18 @@ class PollutionGame:
     
     def joint_gradient (self, u_list, x_list):
         grad_list = []
+        # Iterate over derivative to player i
         for i in range (self.n):
+            # Sum over each player's cost function being derived to player i
             grad_sum = 0
             for j in range (self.n):
-                pol_dynamics = (1-2*u_list[j])*x_list[j] + sum([(self.psi[k][j] * (1-u_list[k]) * x_list[k]) if (j!=k) else 0 for k in range (self.n)])
+                pol_dynamics = self.x_dot (j, u_list, x_list)
                 if i == j:
-                    grad = -2*x_list[i]*self.beta*np.exp(self.beta*pol_dynamics) + self.lambd
+                    grad = -2* x_list[i]* self.beta * np.exp(self.beta*pol_dynamics) + self.lambd
                 else:
-                    grad = -self.psi[i][j]*x_list[i]*self.beta*np.exp(self.beta*pol_dynamics)
+                    grad = -self.psi[i][j] * x_list[i] * self.beta * np.exp(self.beta*pol_dynamics)
                 grad_sum += self.mu[i]*grad
-                grad_list.append(grad_sum)
+            grad_list.append(grad_sum)
         return grad_list
     
     def joint_gradient_lambda (self, x_list):
@@ -203,8 +205,9 @@ class PollutionGame:
         # Compute number of iterations
         n_iter = int(duration / step_size) + 1
 
-        # Initialize time axis
+        # Initialize time axis and psi matrix
         t_list = [(t * step_size) for t in range (n_iter + 1)]
+        self.psi = self.psi_list[0]
 
         # Initialize arrays to save state and decision variables throughout the time
         x_list_final = np.empty((self.n, n_iter + 1))
@@ -218,6 +221,9 @@ class PollutionGame:
 
         # Loop over each time
         for t in range (n_iter):
+            # Updating psi matrix
+            self.psi = self.psi_list[int( ((t + 1) * step_size) % 12)]
+
             # Update state variable
             x_list_final[:, t + 1] = self.update_x(u_list_final[:, t], x_list_final[:, t], step_size)
 
@@ -277,8 +283,9 @@ class PollutionGame:
         n_iter = int(duration / step_size) + 1  # total iteration
         initial_iter = int(0.01 * n_iter)        # iteration for initial noncoop. game
 
-        # Initialize time axis
+        # Initialize time axis and psi matrix
         t_list = [(t * step_size) for t in range (n_iter + 1)]
+        self.psi = self.psi_list[0]
 
         # Initialize arrays to save state and decision variables throughout the time
         x_list_final = np.empty((self.n, n_iter + 1))
@@ -290,6 +297,9 @@ class PollutionGame:
          
         # Loop over each time
         for t in range (initial_iter+1, n_iter):
+            # Updating psi matrix
+            self.psi = self.psi_list[int( ((t + 1) * step_size) % 12)]
+
             # Update state variable
             x_list_final[:, t + 1] = self.update_x(u_list_final[:, t], x_list_final[:, t], step_size)
 
@@ -305,8 +315,9 @@ class PollutionGame:
         # Compute number of iterations
         n_iter = int(duration / step_size) + 1
 
-        # Initialize time axis
+        # Initialize time axis and psi
         t_list = [(t * step_size) for t in range (n_iter + 1)]
+        self.psi = self.psi_list[0]
 
         # Initialize arrays to save state and decision variables throughout the time
         x_list_final = np.empty((self.n, n_iter + 1))
@@ -315,8 +326,8 @@ class PollutionGame:
 
         # Compute initial decision
         x_list = self.initial_x_list
-        res = minimize(self.joint_cost_func_lambda(x_list), initial_guess, bounds=bounds,
-              options={'gtol': 1e-10, 'maxiter': 8000})
+        res = minimize(self.joint_cost_func_lambda(x_list), initial_guess, method='L-BFGS-B', jac=self.joint_gradient_lambda(x_list), bounds=bounds,
+              options={'gtol': 1e-6, "ftol": 1e-9, 'maxiter': 500})
         u_list_final[:, 0] = res.x
         cost_final[0] = res.fun
         self.print_when_fail(res.success)
@@ -326,13 +337,17 @@ class PollutionGame:
 
         # Loop over each time
         for t in range (n_iter):
+
+            # Updating psi matrix
+            self.psi = self.psi_list[int( ((t + 1) * step_size) % 12)]
+
             # Update state variable
             x_list_final[:, t + 1] = self.update_x(u_list_final[:, t], x_list_final[:, t], step_size)
 
             # Update decision variable
             x_list = x_list_final[:, t]
-            res = minimize(self.joint_cost_func_lambda(x_list), initial_guess, bounds=bounds,
-                options={'gtol': 1e-10, 'maxiter': 8000})
+            res = minimize(self.joint_cost_func_lambda(x_list), initial_guess, method='L-BFGS-B', jac=self.joint_gradient_lambda(x_list), bounds=bounds,
+                options={'gtol': 1e-6, "ftol": 1e-9, 'maxiter': 500})
             u_list_final[:, t + 1] = res.x
             cost_final[t + 1] = res.fun
             self.print_when_fail(res.success)

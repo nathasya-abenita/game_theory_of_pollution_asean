@@ -11,7 +11,6 @@ if __name__ == "__main__" :
     beta, lambd = 10, 4
     neigh = [[i for i in range (n)] for _ in range (n)]
     mu = [1 for _ in range (n)]
-    psi = psi_list[0]
 
     # Define labels for players
     labels = ["Indonesia", "Vietnam", "Thailand", "Malaysia", "The Philippines",
@@ -22,7 +21,7 @@ if __name__ == "__main__" :
     initial_x_list = initial_x_list / 100
 
     # Call game class
-    game = PollutionGame(n, beta, psi, neigh, lambd, initial_x_list, mu=mu)
+    game = PollutionGame(n, beta, psi_list, neigh, lambd, initial_x_list, mu=mu)
 
     # Simulate noncooperative game, then plot
     t_list, u_list_final, x_list_final, cost_list = game.solve_diff_game_coop(duration=T, step_size=step_size)
