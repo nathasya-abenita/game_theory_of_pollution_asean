@@ -30,7 +30,7 @@ if __name__ == '__main__':
     plt.savefig('./output/figs/brf_two_players.png')
 
     # Solve analytically
-    u_analytical = game.solve_static_game_noncooperative()
+    u_analytical = game.solve_static_game_noncoop()
     print('Numerical solution:', u_analytical)
 
     # Validate numerical solution
